@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <iostream>
 using namespace std;
 class Date
@@ -53,6 +53,9 @@ public:
 	int dateIncludeDays() const;
 	//算出星期几
 	string getweek();
+	//重载<<与>>用于进行类的输入输出
+	friend ostream& operator<<(ostream& cout, const Date& d);
+	friend istream& operator>>(istream& in, Date& d);
 private:
 	int _year;
 	int _month;

@@ -10,6 +10,10 @@ int main()
 	d1.PrintDate();
 	d2.PrintDate();
 	d3.PrintDate();
-	cout <<"ÊÇ" << d3.getweek() << endl;
+	cout <<"æ˜¯" << d3.getweek() << endl;
+	cout << d1<<endl;
+	int xx;
+	cin >> d1;
+	cout << d1;
 	return 0;
 }

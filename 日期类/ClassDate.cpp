@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS 1
+#define _CRT_SECURE_NO_WARNINGS 1
 #include "ClassDate.h"
 //打印日期
 void Date::PrintDate()
@@ -224,4 +224,15 @@ string Date::getweek()
 	return yearoneweek[(*this - yearone) % 7];
 	//由于星期四1582年10月4日后直接是星期五10月15日,因此特别注意要在dateIncludeDays()函数中,把1582年10月的天数修正到21天,不然当日期超过1582年10月4日后
 	//算出来的总天数就比实际总天数多出来十天,用这个错误的总天数来%7,自然得不到正确的星期几
+}
+//重载<<与>>用于进行类的输入输出
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year << '/' << d._month << '/' << d._day;
+	return out;
+}
+istream& operator>>(istream& in,Date& d)
+{
+	in >>d._year>>d._month>> d._day;
+	return in;
 }
