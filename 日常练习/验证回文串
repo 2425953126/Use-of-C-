@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isPalindrome(string s) 
+    {
+        string::iterator start=s.begin(),behind=s.end()-1,beg=s.begin(),ends=s.end();
+        while(start<behind)
+        {
+            while(start<ends&&!(*start>='0'&&*start<='9'||*start>='A'&&*start<='Z'||*start>='a'&&*start<='z'))
+                start++;
+            while(behind>=beg&&!(*behind>='0'&&*behind<='9'||*behind>='A'&&*behind<='Z'||*behind>='a'&&*behind<='z'))
+                behind--;
+            char tmp1=tolower(*start),tmp2=tolower(*behind);
+            if(start<ends&&behind>beg&&tmp1!=tmp2)
+                return false;
+            start++;
+            behind--;
+        }
+        return true;
+    }
+};
