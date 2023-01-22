@@ -1,0 +1,26 @@
+class _Solution
+{
+public:
+    _Solution()
+    {
+        sum+=i;
+        i++;
+    }
+   static int privatesum()
+    {
+        return sum;
+    }
+private:
+    static int sum;
+    static int i;
+};
+int _Solution::sum=0;
+int _Solution::i=1;
+class Solution {
+public:
+    int Sum_Solution(int n) 
+    {
+        _Solution a[n];
+        return _Solution::privatesum();
+    }
+};
