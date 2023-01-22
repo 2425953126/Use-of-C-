@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+void printdate(int year,int n)
+{
+    int days[]={-1,0,31,59,90,120,151,181,212,243,273,304,334},i=0;
+    if((year%4==0&&year%100!=0)||year%400==0)
+        {
+            i=3;
+            while(i<13)
+                days[i++]++;
+        }
+    i=1;
+    while(n>days[i])
+        i++;
+    i--;
+    int day=n-days[i];
+    printf("%d-%02d-%02d\n",year,i,day);
+}
+int main() 
+{
+    int year,n;
+    while(cin>>year>>n)
+        {       
+            printdate(year,n);
+        }
+    return 0;
+}
