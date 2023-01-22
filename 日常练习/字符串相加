@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2)
+    {
+        string sum;
+        int end1=num1.size()-1,end2=num2.size()-1,cx=0;
+        while(end1>-1||end2>-1)
+        {   
+            char tmp1,tmp2;
+            if(end1>-1)
+                 tmp1=num1[end1];
+            else
+                 tmp1='0';
+            if(end2>-1)
+                 tmp2=num2[end2];
+            else
+                 tmp2='0';
+            sum+=tmp1+tmp2+cx-'0';
+            cx=0;
+            if(sum[sum.size()-1]>'9')
+                {
+                    sum[sum.size()-1]-=10;
+                    cx=1;
+                }
+            end1--;
+            end2--;
+        }
+        if(cx==1)
+            sum+='1';
+        reverse(sum.begin(),sum.end());
+        return sum;
+    }
+};
