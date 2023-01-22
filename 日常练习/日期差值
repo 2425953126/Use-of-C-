@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstdio>
+using namespace std;
+class date {
+  public:
+    date(int year = 1, int month = 1, int day = 1): _year(year), _month(month),
+        _day(day)
+    {  }
+    int getmonthdays(int& year, int& month) 
+    {
+        int days[] = {-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (!(month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)))
+            return days[month];
+        else
+            return days[month] + 1;
+    }
+    date& operator--()
+    {
+        _day--;
+        while(_day<1)
+        {   
+            _month--;
+            if(_month<1)
+            {
+                _year--;
+                _month=12;
+            }
+            _day+=getmonthdays(_year,_month);
+        }
+        return *this;
+    }
+    bool operator==(date&tmp)
+    {
+        if(_year==tmp._year&&_month==tmp._month&&_day==tmp._day)
+            return true;
+        else
+            return false;
+    }
+    void printdate(date min) 
+    {
+        int i=0;
+        while(!(*this==min))
+        {
+            --*this;
+            i++;
+        }
+        cout<<i+1<<endl;
+    }
+  private:
+    int _year, _month, _day;
+};
+
+int main() {
+    int y, m, d;
+    while (scanf("%4d%2d%2d", &y, &m, &d) != EOF) {
+        date min(y, m, d);
+        scanf("%4d%2d%2d", &y, &m, &d);
+        date max(y, m, d);
+        max.printdate(min);
+    }
+    return 0;
+}
