@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+void  printdays(int year, int month, int day) 
+{
+    int days[] = {-1, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
+    int datist = days[month];
+    if (month > 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+        datist++;
+    cout << datist + day << endl;
+}
+int main() 
+{
+   int year,month,day;
+   while(cin>>year>>month>>day)
+   {    
+        printdays(year,month,day);
+   }
+    return 0;
+}
