@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string multiply(string num1, string num2)//优化版竖式相乘,直接把每次相乘结果保存进积对应位置,而不是按照传统竖式
+    {                                        //那样先算出被乘数乘以乘数最低位的值,再算出乘以次低位的值...最后全部相加
+        if(num1=="0"||num2=="0")
+            return "0";
+        int*product=new int[num1.size()+num2.size()]();
+        int end1=num1.size()-1,end2=num2.size()-1;
+        for(int i=0;i<num2.size();i++)
+        {
+            for(int j=0;j<num1.size();j++)
+            {
+                int x=num1[num1.size()-j-1]-'0',y=num2[num2.size()-i-1]-'0';
+                product[i+j]+=(x*y);//注意,每次运算直接在积对应位上进行运算,因此只能是+=,切忌写为=,下同
+                if(product[i+j]>9)
+                {
+                    product[i+j+1]+=(product[i+j]/10);//进位
+                    product[i+j]%=10;
+                }
+            }
+        }
+        string sproduct;
+        for(int i=num1.size()+num2.size()-1;i>-1;i--)
+        {
+            if(i==num1.size()+num2.size()-1&&product[i]==0)
+                continue;
+            sproduct+=(product[i]+'0');
+        }
+        delete[] product;
+        return sproduct;
+    }
+};
