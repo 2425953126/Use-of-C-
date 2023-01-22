@@ -1,0 +1,18 @@
+class Solution {
+public:
+    string reverseWords(string s) 
+    {   
+        int pos=0;
+        string::iterator front=s.begin(),behind=front;
+        while((pos=s.find_first_of(' ',pos))!=string::npos)
+        {   
+            behind+=pos;
+            reverse(front,behind);
+            front=behind+1;
+            behind=s.begin();
+            pos++;
+        }
+        reverse(front,s.end());//别忘了最后一个单词后没有空格,需要额外处理
+        return s;
+    }
+};
