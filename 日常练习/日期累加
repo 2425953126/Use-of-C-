@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+int getmonthdays(int&year,int&month)
+{
+    int days[]={-1,31,28,31,30,31,30,31,31,30,31,30,31};
+    if(!(month==2&&((year%4==0&&year%100!=0)||year%400==0)))
+        return days[month];
+    else
+        return days[month]+1;
+}
+void printfdate(int&year,int&month,int&day,int&adddays)
+{   
+    int monthdays=getmonthdays(year,month);
+    day+=adddays;
+    while(day>monthdays)
+    {
+        day-=monthdays;
+        month++;
+        if(month>12)
+            {
+                year++;
+                month=1;
+            }
+        monthdays=getmonthdays(year,month);
+    }
+    printf("%d-%02d-%02d\n",year,month,day);
+}
+int main()
+ {
+    int m=0;
+    cin>>m;
+    int i=0;
+    while(i<m)
+    {
+        int year,month,day,adddays;
+        cin>>year>>month>>day>>adddays;
+        printfdate(year,month,day,adddays);
+        i++;
+    }
+    return 0;
+}
