@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string reverseStr(string s, int k) 
+    {
+        string::iterator k1=s.begin(),k2=k1,ends=s.end();
+        while(k2<ends)
+        {   
+            int _k=0;
+            while(k2<ends&&_k<2*k)//k1代表每次的起始位置,_k代表计数了多少个字符,k2代表了计数了2k后的终点位置
+                {                 //如果剩余字符不足2k,则k2就无用了
+                   k2++;
+                   _k++;
+               }
+            if(_k==2*k)
+                {
+                    reverse(k1,k2-k);//也可以改成(k1,k1+2k)
+                    k1=k2;
+                    _k=0;
+                }
+            else if(_k>=k)
+                {
+                    reverse(k1,k1+k);
+                    break;
+                }
+            else
+                {
+                    reverse(k1,k1+_k);
+                    break;
+                }
+        }
+        return s;
+    }
+};
