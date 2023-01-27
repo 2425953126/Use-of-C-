@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) 
+    {
+         int ab=0;
+         for(int i=0;i<nums.size();i++)//异或所有数,求出不重复的两数异或的结果
+            ab^=nums[i];
+         int bits=0,j=0;//找出两数异或结果中为1的位,并将其低位置位全0,以在全部数中区分两数,称为区分数
+         while(1)       //两位相异,异或结果才为1,因此异或结果为1的位,一定代表两数在此位一个为1,一个为0
+         {
+             bits=(ab>>j)&1;
+             if(bits!=0)
+                break;
+             j++;
+         }
+         bits<<=j;//bits已成为区分数
+         vector<int> answer(2,0);
+         for(int i=0;i<nums.size();i++)//所有数按位与于区分数,一定会得到一组数结果为0,另一组结果不为0,,接下来两组数各自全部异或,即得到结果
+            {
+                if((nums[i]&bits)!=0)
+                    answer[0]^=nums[i];
+                else
+                    answer[1]^=nums[i];
+            }
+            return answer;
+    }
+};
