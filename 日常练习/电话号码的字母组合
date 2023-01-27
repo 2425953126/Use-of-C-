@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void _letterCombinations(int i,string&digits,vector<string>&answer,string combin=string())
+    {   
+        if(i==digits.size())
+            {
+                answer.push_back(combin);
+                return;
+            }
+        for(int j=0;j<letter[digits[i]-'0'].size();j++)
+        {
+            _letterCombinations(i+1,digits,answer,combin+letter[digits[i]-'0'][j]);
+        }
+    }
+
+    vector<string> letterCombinations(string digits) 
+    {   
+        vector<string> answer;
+        if(digits.size()==0)
+            return answer;
+        _letterCombinations(0,digits,answer);
+        return answer;
+    }
+private:
+    const string letter[10]={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+};
