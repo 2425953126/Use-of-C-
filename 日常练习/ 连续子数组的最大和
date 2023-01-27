@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int FindGreatestSumOfSubArray(vector<int> array) 
+    {
+        int x=array[0],y=0,maxsum=x;
+        for(int i=1;i<array.size();i++)
+        {
+            y=max(x+array[i],array[i]);
+            maxsum=max(maxsum,y);
+            x=y;
+        }
+        return maxsum;
+    }
+};
