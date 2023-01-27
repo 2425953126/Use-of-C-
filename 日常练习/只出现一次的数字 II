@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) //每次确定答案的一个位,该方法无论要重复出现的元素是几次都可以解决了
+    {
+        int bit=0,answer=0;//bit决定求第几位,answer为答案
+        while(bit<32)
+        {   
+            int bitssum=0,tmp=0;//bitssum为所有数bit位的和,将之取余3即得到答案位
+            for(int i=0;i<nums.size();i++)
+            {
+                bitssum+=(nums[i]>>bit)&1;
+            }
+            tmp=(bitssum%3)<<bit;
+            answer+=tmp;//tmp求出该位后全0的数值,加进ansewr后,即相当于把该位放到了答案的指定位
+            bit++;
+        }
+        return answer;
+    }
+};
