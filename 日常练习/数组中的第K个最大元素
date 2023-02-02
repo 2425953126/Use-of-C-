@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) 
+    {
+        priority_queue<int,vector<int>,greater<int>> a(nums.begin(),nums.begin()+k);
+        vector<int>::iterator it=nums.begin()+k;
+        while(it!=nums.end())
+        {
+            if(*it>a.top())
+            {
+                a.pop();
+                a.push(*it);
+            }
+            ++it;
+        }
+        return a.top();
+    }
+};
