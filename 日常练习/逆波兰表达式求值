@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> reversePolish;
+        for(int i=0;i<tokens.size();i++)
+        {   
+            if(!(tokens[i][0]<'0'&&tokens[i].size()<=1))
+               {
+                   reversePolish.push(stoi(tokens[i]));
+               }
+            else
+            {
+                int operand2=reversePolish.top();
+                reversePolish.pop();
+                int operand1=reversePolish.top();
+                reversePolish.pop();
+                int result=0;
+                switch(tokens[i][0])
+                {
+                    case '+':result=operand1+operand2;break;
+                    case '-':result=operand1-operand2;break;
+                    case '*':result=operand1*operand2;break;
+                    case '/':result=operand1/operand2;
+                }
+                reversePolish.push(result);
+            }
+        }
+        return reversePolish.top();
+    }
+};
