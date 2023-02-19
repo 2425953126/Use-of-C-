@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        TreeNode* root = new TreeNode;
+        if (preorder.empty() || inorder.empty())
+            return root;
+        _buildTree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1, root);
+        return root;
+    }
+    TreeNode* _buildTree(vector<int>& preorder, int prex, int prey, vector<int>& inorder, int inx, int iny, TreeNode* root)
+    {
+        root->val = preorder[prex];
+        int rootpos = 0, llength = 0, rlength = 0;
+        for (int i = inx; i <= iny ; i++)
+            if (inorder[i] == root->val)
+            {
+                rootpos = i;
+                break;
+            }
+        llength = rootpos - inx;
+        rlength = iny - rootpos;
+        if (llength > 0)
+        {
+            TreeNode* leftchild = new TreeNode;
+            root->left = _buildTree(preorder, prex + 1, prex + llength, inorder, inx, rootpos - 1, leftchild);
+        }
+        else
+            root->left = nullptr;
+        if (rlength > 0)
+        {
+            TreeNode* rightchild = new TreeNode;
+            root->right = _buildTree(preorder, prex + llength + 1, prey, inorder, rootpos + 1, iny, rightchild);
+        }
+        else
+            root->right = nullptr;
+        return root;
+    }
+};
