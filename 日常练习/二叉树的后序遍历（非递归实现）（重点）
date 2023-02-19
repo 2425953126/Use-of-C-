@@ -1,0 +1,55 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+  public:
+      vector<int> postorderTraversal(TreeNode* root)//此种方法太麻烦,还是使用结构体封装树节点和flag标志的方法吧!!
+      {
+          vector<int> solut;
+          if (!root)
+              return solut;
+          stack<TreeNode*> st;
+          TreeNode* prev =root;//prev必须时刻跟着root,在root走过的上一个位置上,如果root->right=prev,则说明是root已经走到过一次了,这次是从右树返回的,可以直接输出节点和出栈了
+          st.push(root);
+          while (!st.empty())
+          {
+              while (root && root->left && root->right != prev && root->left != prev)//要时刻区从上往下找左子树和从下往上由右子树返回两种行动路线,如果prev在root的左右子树,就代表肯定是第二种情况,要严防重新变为找左子树
+              {
+                  prev = root;
+                  root = root->left;
+                  st.push(root);
+              }
+              root = st.top();
+              if (root->right == prev)//prev在root的右孩子位置,代表已从右子树返回,可以输出并出栈根节点的值了
+              {
+                  solut.push_back(root->val);
+                  st.pop();
+              }
+              if (root->right != prev)//从上往下找右子树,如果prev在root的右孩子位置,则说明是从下往上由右子树返回的情况
+              {
+                  prev = root;
+                  root = st.top()->right;
+              }
+              else if (!st.empty())//代表从下往上由右子树返回的情况,root节点已被输出和出栈,意味着该子树已完成遍历,要调用栈来获取父亲节点的位置
+              {
+                  prev = root;
+                  root = st.top();
+              }
+              else
+                  break;//代表着已经完成遍历了,直接退出循环
+              if (root && root->right != prev && root->left != prev)//代表着把从上往下找到的右子树结点入栈,前提是节点不为空,且之前没有入过栈,如果prev是root的左右孩子,则代表root节点肯定已经入过栈了
+                  st.push(root);
+              if (!root)//这一步太重要了,当root走到本子树最右节点的右节点时(为空),由于栈是不会让空节点入栈的,所以prev就走不到这个空节点的(上面的root会强制一下走到空节点的父亲节点即栈顶节点去,而prev又是等于root的,所以prev就少了走到空节点这一步),必须在root走到空节点时让root和prev交换位置,代表root走到底返回到了空节点父亲节点的位置,而prev则仍走在root后面,即那个到底的空节点
+                  swap(root, prev);//注意,一定是root走到那个空节点,"撞墙"了才交换,因为程序每次输出并出栈的是root节点位置的值,如果root在碰壁到空节点之前就和prev节点交换了位置,那交换和prev所在的那个左右孩子皆为空的节点就遍历不到了
+          }
+          return solut;
+      }
+  };
