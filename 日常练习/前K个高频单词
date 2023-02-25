@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        map<string, int> dict;
+        for (auto& x : words)
+        {
+            dict[x]++;
+        }//注意此步顺便完成了所有单词按字典顺序排序
+        multimap<int, map<string, int>::iterator, greater<int>> sortmap;
+        auto it = dict.begin();
+        while (it != dict.end())//由于dict已经完成了字典所有单词字典顺序排序,因此接下来字典顺序靠前的单词一定先插入,字典顺序靠后的单词即使出现频率跟前面单词一样,由于后被处理,所以仍然排在了字典顺序靠前的单词的后面.
+        {
+            sortmap.insert(make_pair(it->second, it));
+            it++;
+        }
+        auto itsort = sortmap.begin();
+        vector<string> solut;
+        for (int i = 0; i < k && itsort != sortmap.end(); itsort++, i++)
+        {
+            solut.push_back(itsort->second->first);
+        }
+        return solut;
+    }
+};
