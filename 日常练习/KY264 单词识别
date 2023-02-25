@@ -1,0 +1,45 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+string& tolower(string& x) {
+    for (auto& it : x) {
+        if (it >= 'A' && it <= 'B')
+            it += 32;
+    }
+    return x;
+}
+class greater_dict {
+  public:
+    bool operator()(map<string, int>::iterator x, map<string, int>::iterator y) {
+        if (x->second > y->second)
+            return true;
+        char cx = (x->first).front(), cy = (y->first).front();
+        if (x->second == y->second && cx < cy)
+            return true;
+        return false;
+    }
+};
+int main() {
+    map<string, int> dict;
+    string tmp;
+    while (cin >> tmp ) {
+        if (tmp.back() == '.')
+            tmp.pop_back();
+        tolower(tmp);
+        dict[tmp]++;
+    }
+    vector<map<string, int>::iterator> sortvalue;
+    auto ittmp = dict.begin();
+    while (ittmp != dict.end()) {
+        sortvalue.push_back(ittmp);
+        ittmp++;
+    }
+    sort(sortvalue.begin(), sortvalue.end(), greater_dict());
+    for (auto& it : sortvalue) {
+        cout << it->first << ':' << it->second << endl;
+    }
+    return 0;
+}
