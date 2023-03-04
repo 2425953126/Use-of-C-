@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>solout;
+        unordered_map<int,short int> count;
+        for(int i=0;i<nums1.size();i++)
+            ++count[nums1[i]];
+        for(int i=0;i<nums2.size();i++)
+        {   
+            unordered_map<int,short int>::iterator it=count.find(nums2[i]);
+            if(it!=count.end()&&it->second>0)
+            {
+                solout.push_back(nums2[i]);
+                --it->second;
+            }
+        }
+        return solout;
+    }
+};
