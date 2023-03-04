@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        unordered_map<string,int> count;
+        vector<string> solout;
+        for(int i=0;i<s1.size();i++)
+        {   
+            string tmp;
+            while(s1[i]!=' '&&i<s1.size())
+                {
+                    tmp+=s1[i++];
+                }
+            ++count[tmp];
+        }
+        for(int i=0;i<s2.size();i++)
+        {   
+            string tmp;
+            while(s2[i]!=' '&&i<s2.size())
+                {
+                    tmp+=s2[i++];
+                }
+            ++count[tmp];
+        }
+        unordered_map<string,int>::iterator it=count.begin();
+        while(it!=count.end())
+        {
+            if(it->second==1)
+                solout.push_back(it->first);
+            it++;
+        }
+        return solout;
+    }
+};
